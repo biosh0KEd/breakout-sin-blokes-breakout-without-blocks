@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <Windows.h>
+#include <conio.h>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ void gotoxy(int x, int y)
 	SetConsoleCursorPosition(hcon, dwPos);
 }
 
-class Elemento
+class elementoARebotar
 {
 public:
 	//Enteros x, y conrdenadas que el elemento va a tomar
@@ -25,7 +26,7 @@ public:
 	//Enteros numx, numy variables que determinan el movimiento del elemento
 	//Integers numx and numy are the variables used to determine the element direction
 	int x, y, numx, numy;
-	Elemento(int a, int b, int c, int d)
+	elementoARebotar(int a, int b, int c, int d)
 	{
 		x = a;
 		y = b;
@@ -67,14 +68,70 @@ public:
 	}
 };
 
+class elementoAMover {
+private:
+	//Coordenadas
+	int x, y;
+public:
+	//Función para asignar el valor inicial de x
+	void setX(int a) {
+		x = a;
+	}
+	//Función para asignar el valor inicial de y
+	void setY(int b) {
+		y = b;
+	}
+	//Función para mover el objeto
+	void mover() {
+		if (_kbhit()) {
+			int tecla = _getch();
+			//Condicionales para mover el objeto con las teclas
+			switch (tecla) {
+				//Derecha
+			case 77:
+				x = x + 7;
+				break;
+				//Izquierda
+			case 75:
+				x = x - 7;
+				break;
+			}
+		}
+		//Condicionales para definir el borde
+		if (x > 78) {
+			x--;
+		}
+		if (x < 0) {
+			x++;
+		}
+		if (y > 25) {
+			y--;
+		}
+		if (y < 0) {
+			y++;
+		}
+		gotoxy(x, y);
+		cout << "-------";
+	}
+	void borrarElemento() {
+		gotoxy(x, y);
+		cout << "        ";
+	}
+};
+
 int main()
 {
-	Elemento Caracter(40, 20, 1, -1);
+	elementoARebotar Caracter(40, 20, 1, -1);
+	elementoAMover Barra;
+	Barra.setX(40);
+	Barra.setY(20);
 	bool repetir = true;
 	while (repetir == true) {
 		Caracter.rebotar();
+		Barra.mover();
 		Sleep(120);
 		Caracter.borrarElemento();
+		Barra.borrarElemento();
 	}
 	return 0;
 }
