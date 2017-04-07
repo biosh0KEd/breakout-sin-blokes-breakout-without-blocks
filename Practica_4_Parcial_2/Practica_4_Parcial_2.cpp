@@ -8,8 +8,7 @@ using namespace std;
 
 //Función con la que nos posiciónamos en cualquier parte del programa
 //Function to move us somewhere in the console.
-void gotoxy(int x, int y)
-{
+void gotoxy(int x, int y) {
 	HANDLE hcon;
 	hcon = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD dwPos;
@@ -18,16 +17,14 @@ void gotoxy(int x, int y)
 	SetConsoleCursorPosition(hcon, dwPos);
 }
 
-class elementoARebotar
-{
+class elementoARebotar {
 public:
 	//Enteros x, y conrdenadas que el elemento va a tomar
 	//Integers x and y are the coordenates of the element.
 	//Enteros numx, numy variables que determinan el movimiento del elemento
 	//Integers numx and numy are the variables used to determine the element direction
 	int x, y, numx, numy;
-	elementoARebotar(int a, int b, int c, int d)
-	{
+	elementoARebotar(int a, int b, int c, int d) {
 		x = a;
 		y = b;
 		numx = c;
@@ -39,20 +36,16 @@ public:
 	{
 		//Condicionales que determinan el limite que tiene el elemento
 		//Determinig conditions of the element's limit 
-		if (x >= 78)
-		{
+		if (x >= 78) {
 			numx = -1;
 		}
-		if (x <= 0)
-		{
+		if (x <= 0) {
 			numx = 1;
 		}
-		if (y >= 24)
-		{
+		if (y >= 24) {
 			numy = -1;
 		}
-		if (y <= 0)
-		{
+		if (y <= 0) {
 			numy = 1;
 		}
 		//Operaciones que provocan el movimiento
@@ -87,28 +80,20 @@ public:
 			int tecla = _getch();
 			//Condicionales para mover el objeto con las teclas
 			switch (tecla) {
-				//Derecha
-			case 77:
+			case 77: //Derecha
 				x = x + 7;
 				break;
-				//Izquierda
-			case 75:
+			case 75: //Izquierda
 				x = x - 7;
 				break;
 			}
 		}
 		//Condicionales para definir el borde
-		if (x > 78) {
-			x--;
+		if (x > 71) {
+			x = x - 7;
 		}
 		if (x < 0) {
-			x++;
-		}
-		if (y > 25) {
-			y--;
-		}
-		if (y < 0) {
-			y++;
+			x = x + 7;
 		}
 		gotoxy(x, y);
 		cout << "-------";
@@ -119,11 +104,11 @@ public:
 	}
 };
 
-int main()
+int main() 
 {
-	elementoARebotar Caracter(40, 20, 1, -1);
+	elementoARebotar Caracter(45, 20, 1, -1);
 	elementoAMover Barra;
-	Barra.setX(40);
+	Barra.setX(7);
 	Barra.setY(20);
 	bool repetir = true;
 	while (repetir == true) {
