@@ -81,19 +81,21 @@ public:
 			//Condicionales para mover el objeto con las teclas
 			switch (tecla) {
 			case 77: //Derecha
-				x = x + 7;
+				x = x + 6;
 				break;
 			case 75: //Izquierda
-				x = x - 7;
+				x = x - 6;
 				break;
 			}
 		}
 		//Condicionales para definir el borde
-		if (x > 71) {
-			x = x - 7;
+		if (x > 72) {
+			y = 20;
+			x = x - x;
 		}
 		if (x < 0) {
-			x = x + 7;
+			y = 20;
+			x = 72;
 		}
 		gotoxy(x, y);
 		cout << "-------";
