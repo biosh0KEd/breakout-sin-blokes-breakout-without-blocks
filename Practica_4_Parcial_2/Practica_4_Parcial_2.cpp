@@ -17,18 +17,44 @@ void gotoxy(int x, int y) {
 	SetConsoleCursorPosition(hcon, dwPos);
 }
 
+void terminarJuego() {
+	int a;
+	gotoxy(0, 0);
+	for (int x = 0; x < 25; x++) {
+			cout << "                                                                                                                                                               " << endl;
+	}
+	gotoxy(35, 12);
+	cout << "!!!Perdiste, se acabo el juego" << endl;
+	cin >> a;
+	exit(0);
+}
+
 class elementoARebotar {
-public:
+private:
 	//Enteros x, y conrdenadas que el elemento va a tomar
 	//Integers x and y are the coordenates of the element.
 	//Enteros numx, numy variables que determinan el movimiento del elemento
 	//Integers numx and numy are the variables used to determine the element direction
 	int x, y, numx, numy;
+	string mensaje = "!!Perdiste";
+public:
 	elementoARebotar(int a, int b, int c, int d) {
 		x = a;
 		y = b;
 		numx = c;
 		numy = d;
+	}
+	int viewX() {
+		return x;
+	}
+	int viewY() {
+		return y;
+	}
+	int viewNumy() {
+		return numy;
+	}
+	void setNumy(int b) {
+		numy = b;
 	}
 	//Funcion para que el elemento rebote por la pantalla
 	//Bounce function
@@ -43,7 +69,8 @@ public:
 			numx = 1;
 		}
 		if (y >= 24) {
-			numy = -1;
+			//numy = -1;
+			terminarJuego();
 		}
 		if (y <= 0) {
 			numy = 1;
@@ -74,6 +101,9 @@ public:
 	void setY(int b) {
 		y = b;
 	}
+	int viewX() {
+		return x;
+	}
 	//Función para mover el objeto
 	void mover() {
 		if (_kbhit()) {
@@ -91,7 +121,7 @@ public:
 		//Condicionales para definir el borde
 		if (x > 72) {
 			y = 20;
-			x = x - x;
+			x = 0;
 		}
 		if (x < 0) {
 			y = 20;
@@ -110,10 +140,21 @@ int main()
 {
 	elementoARebotar Caracter(45, 20, 1, -1);
 	elementoAMover Barra;
+	int mx, my, rx, rNumy;
 	Barra.setX(7);
 	Barra.setY(20);
 	bool repetir = true;
 	while (repetir == true) {
+		mx = Caracter.viewX();
+		my = Caracter.viewY();
+		rx = Barra.viewX();		
+		if (my == 19 && mx >= rx && mx <= rx + 7) {
+			if (rNumy == 1) {
+				Caracter.setNumy(-1);
+				cout << "Estamos dentro";
+			}
+		}
+		rNumy = Caracter.viewNumy();
 		Caracter.rebotar();
 		Barra.mover();
 		Sleep(120);
