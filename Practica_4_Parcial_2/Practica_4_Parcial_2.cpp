@@ -17,9 +17,13 @@ void gotoxy(int x, int y) {
 	SetConsoleCursorPosition(hcon, dwPos);
 }
 
+//Funcion para terminar el juego
+//Function to end the game
 void terminarJuego() {
 	int a;
 	gotoxy(0, 0);
+	//Ciclo para borrar toda la pantalla de la consola
+	//Loop to erase all the display's console
 	for (int x = 0; x < 25; x++) {
 			cout << "                                                                                                                                                               " << endl;
 	}
@@ -44,6 +48,8 @@ public:
 		numx = c;
 		numy = d;
 	}
+	//Funciones para mostrar las variables.
+	//Functions to show the variables
 	int viewX() {
 		return x;
 	}
@@ -53,6 +59,8 @@ public:
 	int viewNumy() {
 		return numy;
 	}
+	//Función para asignar el valor de la variable de movimiento en el eje y
+	//Function to assign the axis y variable's value
 	void setNumy(int b) {
 		numy = b;
 	}
@@ -69,7 +77,6 @@ public:
 			numx = 1;
 		}
 		if (y >= 24) {
-			//numy = -1;
 			terminarJuego();
 		}
 		if (y <= 0) {
@@ -82,6 +89,8 @@ public:
 		gotoxy(x, y);
 		cout << ":)";
 	}
+	//Función para borrar el elemento
+	//Functions to erase the element
 	void borrarElemento() {
 		gotoxy(x, y);
 		cout << "  ";
@@ -91,34 +100,42 @@ public:
 class elementoAMover {
 private:
 	//Coordenadas
+	//Coordenates
 	int x, y;
 public:
-	//Función para asignar el valor inicial de x
+	//Función para asignar el valor de x
+	//Function to assign the x coordenate's value
 	void setX(int a) {
 		x = a;
 	}
-	//Función para asignar el valor inicial de y
+	//Función para asignar el valor de y
+	//Function to assign the y coordenate's value
 	void setY(int b) {
 		y = b;
 	}
+	//Función para mostrar el valor de y
+	//Function to show the coordenate y value
 	int viewX() {
 		return x;
 	}
-	//Función para mover el objeto
+	//Función para mover el elemento
+	//Function to move the element
 	void mover() {
 		if (_kbhit()) {
 			int tecla = _getch();
-			//Condicionales para mover el objeto con las teclas
+			//Condicionales para mover el elemento con las teclas
+			//Conditions to move the element with the keywords 
 			switch (tecla) {
-			case 77: //Derecha
+			case 77: //Derecha Right
 				x = x + 6;
 				break;
-			case 75: //Izquierda
+			case 75: //Izquierda Left
 				x = x - 6;
 				break;
 			}
 		}
-		//Condicionales para definir el borde
+		//Condicionales para definir el limite del borde
+		//Conditions to define the limit border
 		if (x > 72) {
 			y = 20;
 			x = 0;
@@ -130,6 +147,8 @@ public:
 		gotoxy(x, y);
 		cout << "-------";
 	}
+	//Función para que se borre el elemento
+	//Function to erase the element from the console
 	void borrarElemento() {
 		gotoxy(x, y);
 		cout << "        ";
@@ -148,13 +167,14 @@ int main()
 		mx = Caracter.viewX();
 		my = Caracter.viewY();
 		rx = Barra.viewX();		
+		rNumy = Caracter.viewNumy();
+		//Condicionales para que rebote el elemento en la barra
+		//Conditions to make the element bounce in the bar
 		if (my == 19 && mx >= rx && mx <= rx + 7) {
 			if (rNumy == 1) {
 				Caracter.setNumy(-1);
-				cout << "Estamos dentro";
 			}
 		}
-		rNumy = Caracter.viewNumy();
 		Caracter.rebotar();
 		Barra.mover();
 		Sleep(120);
